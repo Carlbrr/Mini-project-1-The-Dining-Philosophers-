@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strconv"
 	"time"
 )
 
@@ -20,7 +19,7 @@ func (p Philosopher) eat() {
 	p.left.Lock()
 	p.right.Lock()
 	p.outgoing <- "Eating"
-
+  
 	philosophers[p.number-1%5].incoming <- "LeftNotFree"
 	philosophers[p.number+1%5].incoming <- "RightNotFree"
 
@@ -44,8 +43,10 @@ func (p Philosopher) receiver() {
 			p.leftFree = false
 		} else if start == "RightFree" {
 			p.rightFree = true
-		} else {
+		} else if start == "RightNotFree" {
 			p.rightFree = false
+		} else if start == "timesEaten" {
+			p.outgoing <- strconv.Itoa(p.timesEaten)
 		}
 
 		p.eatIfPossible()

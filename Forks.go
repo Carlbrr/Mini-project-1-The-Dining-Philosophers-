@@ -1,6 +1,9 @@
 package main
 
-import "sync"
+import (
+	"strconv"
+	"sync"
+)
 
 type Fork struct {
 	timesUsed int
@@ -21,4 +24,30 @@ func (f Fork) Unlock() {
 	f.inUse = false
 	f.outgoing <- "Put down"
 	f.locker.Lock()
+}
+
+func (f Fork) forkReciever() {
+	for {
+		call := <-f.incoming
+		if call == "timesUsed" {
+
+			f.outgoing <- strconv.Itoa(f.timesUsed)
+
+		} else if call == "inUse" {
+
+			f.outgoing <- strconv.FormatBool(f.inUse)
+
+		} else if call == "using" {
+
+			f.inUse = true
+			f.Lock()
+
+		} else if call == "notUsing" {
+
+			f.inUse = false
+			f.Unlock()
+
+		}
+
+	}
 }
