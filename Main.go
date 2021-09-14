@@ -18,13 +18,19 @@ func main() {
 	var phil4 = Philosopher{number: 4, left: &Forks[4], right: &Forks[0], outgoing: make(chan string), incoming: make(chan string)}
 
 	philosophers = []Philosopher{phil0, phil1, phil2, phil3, phil4}
-
+	fmt.Println("Philos init")
 	go phil0.receiver()
+	fmt.Println("Routine 1")
 	go phil1.receiver()
+	fmt.Println("Routine 2")
 	go phil2.receiver()
+	fmt.Println("Routine 3")
 	go phil3.receiver()
+	fmt.Println("Routine 4")
 	go phil4.receiver()
+	fmt.Println("Routine 5")
 
+	fmt.Println("Routines started")
 	for {
 		select {
 		case msg1 := <-phil0.outgoing:
