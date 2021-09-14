@@ -12,8 +12,8 @@ type Philosopher struct {
 	right      *Fork
 	rightFree  bool
 	number     int
-	outgoing   chan<- string
-	incoming   <-chan string
+	outgoing   chan string
+	incoming   chan string
 }
 
 func (p Philosopher) eat() {
