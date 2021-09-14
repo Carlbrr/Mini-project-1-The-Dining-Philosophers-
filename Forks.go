@@ -37,14 +37,12 @@ func (f Fork) forkReciever() {
 
 			f.outgoing <- strconv.FormatBool(f.inUse)
 
-		} else if call == "using" {
+		} else if call == "lock" {
 
-			f.inUse = true
 			f.Lock()
 
-		} else if call == "notUsing" {
+		} else if call == "unlock" {
 
-			f.inUse = false
 			f.Unlock()
 
 		}
