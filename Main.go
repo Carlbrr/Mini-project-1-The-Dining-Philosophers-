@@ -20,12 +20,12 @@ func main() {
 	go phil3.receiver()
 	go phil4.receiver()
 	go phil5.receiver()
-	/* go Forks[0].forkReciever()
+	go Forks[0].forkReciever()
 	go Forks[1].forkReciever()
 	go Forks[2].forkReciever()
 	go Forks[3].forkReciever()
 	go Forks[4].forkReciever()
-	*/
+
 	for {
 		select {
 		case msg1 := <-phil1.outgoing:
