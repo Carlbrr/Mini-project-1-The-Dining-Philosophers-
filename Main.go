@@ -23,27 +23,27 @@ func main() {
 
 	for {
 		select {
-		case msg1 := <-phil1.outgoing:
+		case msg1 := <-phil1.incoming:
 			if msg1 == "Eating" {
 				fmt.Println("phil1 eating:" + strconv.Itoa(phil1.timesEaten))
 			} else {
 
 			}
-		case msg2 := <-phil2.outgoing:
+		case msg2 := <-phil2.incoming:
 			if msg2 == "Eating" {
 				fmt.Println("phil2 eating: " + strconv.Itoa(phil2.timesEaten))
 			} else {
 
 			}
 
-		case msg3 := <-phil3.outgoing:
+		case msg3 := <-phil3.incoming:
 			if msg3 == "Eating" {
 				fmt.Println("phil3 eating: " + strconv.Itoa(phil3.timesEaten))
 			} else {
 
 			}
 
-		case msg4 := <-phil4.outgoing:
+		case msg4 := <-phil4.incoming:
 			if msg4 == "Eating" {
 				fmt.Println("phil4 eating: " + strconv.Itoa(phil4.timesEaten))
 			} else {
@@ -54,7 +54,7 @@ func main() {
 				}
 			}
 
-		case msg5 := <-phil5.outgoing:
+		case msg5 := <-phil5.incoming:
 			if msg5 == "Eating" {
 				fmt.Println("phil5 eating: " + strconv.Itoa(phil5.timesEaten))
 			} else {
