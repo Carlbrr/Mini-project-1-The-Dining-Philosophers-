@@ -17,12 +17,12 @@ func (f Fork) Lock() {
 	f.locker.Lock()
 	f.inUse = true
 	f.timesUsed++
-	f.outgoing <- "Lifted"
+	//f.outgoing <- "Lifted"
 }
 
 func (f Fork) Unlock() {
 	f.inUse = false
-	f.outgoing <- "Put down"
+	//f.outgoing <- "Put down"
 	f.locker.Lock()
 }
 

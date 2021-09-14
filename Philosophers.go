@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
-	"time"
 )
 
 type Philosopher struct {
@@ -18,31 +16,41 @@ type Philosopher struct {
 }
 
 func (p Philosopher) eat() {
-	fmt.Println("eating")
+	//fmt.Print(p.number)
+	//fmt.Println("eating")
 	p.left.incoming <- "lock"
 	p.right.incoming <- "lock"
-	p.outgoing <- "Eating"
-
-	philosophers[p.number-1%5].incoming <- "LeftNotFree"
-	philosophers[p.number+1%5].incoming <- "RightNotFree"
-
-	p.outgoing <- "Philosopher " + strconv.Itoa(p.number) + " has eaten " + strconv.Itoa(p.timesEaten)
-	time.Sleep(time.Millisecond * 500)
 	p.timesEaten++
+	if p.number == 0 {
+		philosophers[4].incoming <- "LeftNotFree"
+		philosophers[1].incoming <- "RightNotFree"
+	} else {
+		philosophers[p.number-1%5].incoming <- "LeftNotFree"
+		philosophers[p.number+1%5].incoming <- "RightNotFree"
+	}
+	p.outgoing <- "Eating"
+	//fmt.Print(p.number)
+	//fmt.Println("Done eating")
+
+	//p.outgoing <- "Philosopher " + strconv.Itoa(p.number) + " has eaten " + strconv.Itoa(p.timesEaten)
+	//time.Sleep(time.Millisecond * 500)
 
 	p.left.incoming <- "unlock"
 	p.right.incoming <- "unlock"
+	if p.number == 0 {
+		philosophers[4].incoming <- "LeftFree"
+		philosophers[1].incoming <- "RightFree"
+	} else {
+		philosophers[p.number-1%5].incoming <- "LeftFree"
+		philosophers[p.number+1%5].incoming <- "RightFree"
+	}
 	p.outgoing <- "Thinking"
 
-	philosophers[p.number-1%5].incoming <- "LeftFree"
-	philosophers[p.number+1%5].incoming <- "RightFree"
 }
 
 func (p Philosopher) receiver() {
 	for {
-		fmt.Println("received1")
 		start := <-p.incoming
-		fmt.Println("received2")
 		if start == "LeftFree" {
 			p.leftFree = true
 		} else if start == "LeftNotFree" {
@@ -54,14 +62,12 @@ func (p Philosopher) receiver() {
 		} else if start == "timesEaten" {
 			p.outgoing <- strconv.Itoa(p.timesEaten)
 		}
-		fmt.Println("received")
 		p.eatIfPossible()
 	}
 }
 
 func (p Philosopher) eatIfPossible() {
-	fmt.Println("EatIfPossible")
-	if p.leftFree && p.rightFree {
+	if p.leftFree == true && p.rightFree == true {
 		p.eat()
 	}
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"time"
 )
 
 var philosophers []Philosopher
@@ -19,62 +20,70 @@ func main() {
 
 	philosophers = []Philosopher{phil0, phil1, phil2, phil3, phil4}
 	fmt.Println("Philos init")
-	go phil0.receiver()
 	fmt.Println("Routine 1")
-	go phil1.receiver()
+	go phil0.receiver()
+	time.Sleep(time.Second * 1)
 	fmt.Println("Routine 2")
-	go phil2.receiver()
+	go phil1.receiver()
 	fmt.Println("Routine 3")
-	go phil3.receiver()
+	time.Sleep(time.Second * 1)
+	go phil2.receiver()
 	fmt.Println("Routine 4")
-	go phil4.receiver()
+	time.Sleep(time.Second * 1)
+	go phil3.receiver()
 	fmt.Println("Routine 5")
+	time.Sleep(time.Second * 1)
+	go phil4.receiver()
+
+	time.Sleep(time.Second * 1)
 
 	fmt.Println("Routines started")
+	phil0.incoming <- "start"
 	for {
 		select {
 		case msg1 := <-phil0.outgoing:
-			if msg1 == "Eating" {
+			if msg1 == "p0 Eating" {
 				fmt.Println("phil1 eating:" + strconv.Itoa(phil0.timesEaten))
 				fmt.Println("Fork 1 times used: " + strconv.Itoa(phil0.left.timesUsed))
 				fmt.Println("Fork 5 times used: " + strconv.Itoa(phil0.right.timesUsed))
 			} else {
+				fmt.Println("p0 thinking")
 
 			}
 		case msg2 := <-phil1.outgoing:
-			if msg2 == "Eating" {
+			if msg2 == "p1 Eating" {
 				fmt.Println("phil2 eating: " + strconv.Itoa(phil1.timesEaten))
 				fmt.Println("Fork 2 times used: " + strconv.Itoa(phil1.left.timesUsed))
 				fmt.Println("Fork 1 times used: " + strconv.Itoa(phil1.right.timesUsed))
 			} else {
-
+				fmt.Println("p1 thinking")
 			}
 
 		case msg3 := <-phil2.outgoing:
-			if msg3 == "Eating" {
+			if msg3 == "p2 Eating" {
 				fmt.Println("phil3 eating: " + strconv.Itoa(phil2.timesEaten))
 				fmt.Println("Fork 3 times used: " + strconv.Itoa(phil2.left.timesUsed))
 				fmt.Println("Fork 2 times used: " + strconv.Itoa(phil2.right.timesUsed))
 			} else {
-
+				fmt.Println("p2 thinking")
 			}
 
 		case msg4 := <-phil3.outgoing:
-			if msg4 == "Eating" {
+			if msg4 == "p3 Eating" {
 				fmt.Println("phil4 eating: " + strconv.Itoa(phil3.timesEaten))
 				fmt.Println("Fork 4 times used: " + strconv.Itoa(phil3.left.timesUsed))
 				fmt.Println("Fork 3 times used: " + strconv.Itoa(phil3.right.timesUsed))
 			} else {
-
+				fmt.Println("p3 thinking")
 			}
 
 		case msg5 := <-phil4.outgoing:
-			if msg5 == "Eating" {
+			if msg5 == "p4 Eating" {
 				fmt.Println("phil5 eating: " + strconv.Itoa(phil4.timesEaten))
 				fmt.Println("Fork 5 times used: " + strconv.Itoa(phil4.left.timesUsed))
 				fmt.Println("Fork 4 times used: " + strconv.Itoa(phil4.right.timesUsed))
 			} else {
-
+				fmt.Println("p4 thinking")
 			}
 
 		}
@@ -86,6 +95,7 @@ func createForks() []Fork {
 	Forks := make([]Fork, 5)
 	for i := 0; i < 5; i++ {
 		Forks[i] = Fork{timesUsed: 0, outgoing: make(chan string), incoming: make(chan string), inUse: false}
+		go Forks[i].forkReciever()
 	}
 	return Forks
 }
