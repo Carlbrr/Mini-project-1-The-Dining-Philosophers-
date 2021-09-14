@@ -11,11 +11,11 @@ func main() {
 
 	var Forks = createForks()
 
-	var phil0 = Philosopher{number: 0, left: &Forks[0], right: &Forks[1], outgoing: make(chan string), incoming: make(chan string)}
-	var phil1 = Philosopher{number: 1, left: &Forks[1], right: &Forks[2], outgoing: make(chan string), incoming: make(chan string)}
-	var phil2 = Philosopher{number: 2, left: &Forks[2], right: &Forks[3], outgoing: make(chan string), incoming: make(chan string)}
-	var phil3 = Philosopher{number: 3, left: &Forks[3], right: &Forks[4], outgoing: make(chan string), incoming: make(chan string)}
-	var phil4 = Philosopher{number: 4, left: &Forks[4], right: &Forks[0], outgoing: make(chan string), incoming: make(chan string)}
+	var phil0 = Philosopher{number: 0, left: &Forks[0], right: &Forks[1], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
+	var phil1 = Philosopher{number: 1, left: &Forks[1], right: &Forks[2], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
+	var phil2 = Philosopher{number: 2, left: &Forks[2], right: &Forks[3], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
+	var phil3 = Philosopher{number: 3, left: &Forks[3], right: &Forks[4], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
+	var phil4 = Philosopher{number: 4, left: &Forks[4], right: &Forks[0], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
 
 	philosophers = []Philosopher{phil0, phil1, phil2, phil3, phil4}
 	fmt.Println("Philos init")
