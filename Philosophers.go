@@ -17,8 +17,8 @@ type Philosopher struct {
 }
 
 func (p Philosopher) eat() {
-	p.left.Lock()
-	p.right.Lock()
+	p.left.incoming <- "lock"
+	p.right.incoming <- "lock"
 	p.outgoing <- "Eating"
 
 	philosophers[p.number-1%5].incoming <- "LeftNotFree"
@@ -27,8 +27,9 @@ func (p Philosopher) eat() {
 	p.outgoing <- "Philosopher " + strconv.Itoa(p.number) + " has eaten " + strconv.Itoa(p.timesEaten)
 	time.Sleep(time.Millisecond * 500)
 	p.timesEaten++
-	p.left.Unlock()
-	p.right.Unlock()
+
+	p.left.incoming <- "unlock"
+	p.right.incoming <- "unlock"
 	p.outgoing <- "Thinking"
 
 	philosophers[p.number-1%5].incoming <- "LeftFree"
