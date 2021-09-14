@@ -15,17 +15,17 @@ func main() {
 	var phil4 = Philosopher{number: 4, left: &Forks[3], right: &Forks[4], outgoing: make(chan string), incoming: make(chan string)}
 	var phil5 = Philosopher{number: 5, left: &Forks[4], right: &Forks[0], outgoing: make(chan string), incoming: make(chan string)}
 
-	/* go phil1.receiver()
+	go phil1.receiver()
 	go phil2.receiver()
 	go phil3.receiver()
 	go phil4.receiver()
-	go phil5.receiver() */
-	go Forks[0].forkReciever()
+	go phil5.receiver()
+	/* go Forks[0].forkReciever()
 	go Forks[1].forkReciever()
 	go Forks[2].forkReciever()
 	go Forks[3].forkReciever()
 	go Forks[4].forkReciever()
-
+	*/
 	for {
 		select {
 		case msg1 := <-phil1.outgoing:
