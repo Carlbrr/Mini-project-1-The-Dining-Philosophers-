@@ -1,9 +1,5 @@
 package main
 
-import (
-	"strconv"
-)
-
 type Philosopher struct {
 	timesEaten int
 	left       *Fork
@@ -49,8 +45,28 @@ func (p Philosopher) eat() {
 }
 
 func (p Philosopher) receiver() {
+	p.eatIfPossible()
 	for {
-		start := <-p.incoming
+		select {
+		case msg1 := <-p.incoming:
+			if msg1 == "LeftFree" {
+				p.leftFree = true
+			}
+		case msg2 := <-p.incoming:
+			if msg2 == "LeftNotFree" {
+				p.leftFree = false
+			}
+		case msg3 := <-p.incoming:
+			if msg3 == "RightFree" {
+				p.rightFree = true
+			}
+		case msg4 := <-p.incoming:
+			if msg4 == "RightNotFree" {
+				p.rightFree = false
+			}
+		}
+		p.eatIfPossible()
+		/* start := <-p.incoming
 		if start == "LeftFree" {
 			p.leftFree = true
 		} else if start == "LeftNotFree" {
@@ -62,7 +78,7 @@ func (p Philosopher) receiver() {
 		} else if start == "timesEaten" {
 			p.outgoing <- strconv.Itoa(p.timesEaten)
 		}
-		p.eatIfPossible()
+		p.eatIfPossible() */
 	}
 }
 

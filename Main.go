@@ -19,14 +19,13 @@ func main() {
 	var phil4 = Philosopher{number: 4, left: &Forks[4], right: &Forks[0], outgoing: make(chan string), incoming: make(chan string), leftFree: true, rightFree: true}
 
 	philosophers = []Philosopher{phil0, phil1, phil2, phil3, phil4}
-	fmt.Println("Philos init")
 	fmt.Println("Routine 1")
 	go phil0.receiver()
 	time.Sleep(time.Second * 1)
 	fmt.Println("Routine 2")
 	go phil1.receiver()
-	fmt.Println("Routine 3")
 	time.Sleep(time.Second * 1)
+	fmt.Println("Routine 3")
 	go phil2.receiver()
 	fmt.Println("Routine 4")
 	time.Sleep(time.Second * 1)
@@ -34,11 +33,9 @@ func main() {
 	fmt.Println("Routine 5")
 	time.Sleep(time.Second * 1)
 	go phil4.receiver()
-
 	time.Sleep(time.Second * 1)
 
 	fmt.Println("Routines started")
-	phil0.incoming <- "start"
 	for {
 		select {
 		case msg1 := <-phil0.outgoing:
