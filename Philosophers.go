@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func (p Philosopher) eat() {
 	p.left.Lock()
 	p.right.Lock()
 	p.outgoing <- "Eating"
-  
+
 	philosophers[p.number-1%5].incoming <- "LeftNotFree"
 	philosophers[p.number+1%5].incoming <- "RightNotFree"
 
