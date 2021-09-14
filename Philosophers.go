@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 type Philosopher struct {
 	timesEaten int
@@ -17,6 +20,7 @@ func (p Philosopher) eat() {
 	p.left.Lock()
 	p.right.Lock()
 	p.outgoing <- "Eating"
+	p.outgoing <- "Philosopher " + strconv.Itoa(p.number) + " has eaten " + strconv.Itoa(p.timesEaten)
 	time.Sleep(time.Millisecond * 500)
 	p.timesEaten++
 	p.left.Unlock()
