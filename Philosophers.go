@@ -37,8 +37,10 @@ func (p Philosopher) receiver() {
 			p.leftFree = false
 		} else if start == "RightFree" {
 			p.rightFree = true
-		} else {
+		} else if start == "RightNotFree" {
 			p.rightFree = false
+		} else if start == "timesEaten" {
+			p.outgoing <- strconv.Itoa(p.timesEaten)
 		}
 	}
 }
