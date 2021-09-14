@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 
@@ -15,15 +18,47 @@ func main() {
 	for {
 		select {
 		case msg1 := <-phil1.outgoing:
-			fmt.Println(msg1)
+			if msg1 == "Eating" {
+				fmt.Println("phil1 eating:" + strconv.Itoa(phil1.timesEaten))
+			} else {
+
+			}
 		case msg2 := <-phil2.outgoing:
-			fmt.Println(msg2)
+			if msg2 == "Eating" {
+				fmt.Println("phil2 eating: " + strconv.Itoa(phil2.timesEaten))
+			} else {
+
+			}
+
 		case msg3 := <-phil3.outgoing:
-			fmt.Println(msg3)
+			if msg3 == "Eating" {
+				fmt.Println("phil3 eating: " + strconv.Itoa(phil3.timesEaten))
+			} else {
+
+			}
+
 		case msg4 := <-phil4.outgoing:
-			fmt.Println(msg4)
+			if msg4 == "Eating" {
+				fmt.Println("phil4 eating: " + strconv.Itoa(phil4.timesEaten))
+			} else {
+				if phil3.timesEaten > phil5.timesEaten {
+					phil5.eat()
+				} else {
+					phil3.eat()
+				}
+			}
+
 		case msg5 := <-phil5.outgoing:
-			fmt.Println(msg5)
+			if msg5 == "Eating" {
+				fmt.Println("phil5 eating: " + strconv.Itoa(phil5.timesEaten))
+			} else {
+				if phil4.timesEaten > phil1.timesEaten {
+					phil1.eat()
+				} else {
+					phil4.eat()
+				}
+			}
+
 		}
 	}
 
