@@ -29,6 +29,11 @@ func main() {
 	fmt.Println("Routine 4")
 	go phil4.receiver()
 	fmt.Println("Routine 5")
+	go Forks[0].forkReciever()
+	go Forks[1].forkReciever()
+	go Forks[2].forkReciever()
+	go Forks[3].forkReciever()
+	go Forks[4].forkReciever()
 
 	fmt.Println("Routines started")
 	for {
