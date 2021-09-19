@@ -13,11 +13,11 @@ func main() {
 	var fork3 = Fork{timesUsed: 0, outgoing: make(chan int), incoming: make(chan int)}
 	var fork4 = Fork{timesUsed: 0, outgoing: make(chan int), incoming: make(chan int)}
 
-	var phil0 = Philosopher{left: &fork0, right: &fork1, outgoing: make(chan int), incoming: make(chan int)}
-	var phil1 = Philosopher{left: &fork1, right: &fork2, outgoing: make(chan int), incoming: make(chan int)}
-	var phil2 = Philosopher{left: &fork2, right: &fork3, outgoing: make(chan int), incoming: make(chan int)}
-	var phil3 = Philosopher{left: &fork3, right: &fork4, outgoing: make(chan int), incoming: make(chan int)}
-	var phil4 = Philosopher{left: &fork0, right: &fork4, outgoing: make(chan int), incoming: make(chan int)} //Venstrehåndet
+	var phil0 = Philosopher{left: &fork0, right: &fork1, outgoing: make(chan int)}
+	var phil1 = Philosopher{left: &fork1, right: &fork2, outgoing: make(chan int)}
+	var phil2 = Philosopher{left: &fork2, right: &fork3, outgoing: make(chan int)}
+	var phil3 = Philosopher{left: &fork3, right: &fork4, outgoing: make(chan int)}
+	var phil4 = Philosopher{left: &fork0, right: &fork4, outgoing: make(chan int)} //Venstrehåndet
 
 	go phil0.eat()
 	go phil1.eat()

@@ -9,7 +9,6 @@ type Philosopher struct {
 	left       *Fork
 	right      *Fork
 	outgoing   chan int
-	incoming   chan int
 }
 
 func (p Philosopher) eat() {
@@ -18,15 +17,17 @@ func (p Philosopher) eat() {
 		p.right.locker.Lock()
 		p.left.locker.Lock()
 
+		p.timesEaten++
+		p.outgoing <- p.timesEaten
+
+		time.Sleep(time.Millisecond * 500)
+
 		// 1 betyder at nøglen skal starte
 		// Se note i Forks.go filen
 		p.right.incoming <- 1
 		p.left.incoming <- 1
 
-		p.timesEaten++
-		p.outgoing <- p.timesEaten
-
-		time.Sleep(time.Millisecond * 2000)
+		time.Sleep(time.Millisecond * 1500)
 
 		// Antallet af gange, der er spist kan aldrig være -1
 		// -1 betyder derfor at filosoffen er færdig med at spise
