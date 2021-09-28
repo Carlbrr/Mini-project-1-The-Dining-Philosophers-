@@ -44,24 +44,26 @@ func main() {
 		select {
 		case msg1 := <-phil0.outgoing:
 			if msg1 == -1 {
-				fmt.Println("Philosopher 1 is thinking")
+				fmt.Println("1 - Philosopher 1 is thinking")
 			} else {
 				phil0.incoming <- 2 //2 is like asking; how many times have you eaten?
 				timesEaten := <-phil0.outgoing
 				fmt.Println("1 - Philosopher 1 is eating " + strconv.Itoa(timesEaten))
+
 			}
 		case msg2 := <-phil1.outgoing:
 			if msg2 == -1 {
-				fmt.Println("Philosopher 2 is thinking")
+				fmt.Println("2 - Philosopher 2 is thinking")
 			} else {
 				phil1.incoming <- 2
 				timesEaten := <-phil1.outgoing
 				fmt.Println("2 - Philosopher 2 is eating " + strconv.Itoa(timesEaten))
+
 			}
 
 		case msg3 := <-phil2.outgoing:
 			if msg3 == -1 {
-				fmt.Println("Philosopher 3 is thinking")
+				fmt.Println("3 - Philosopher 3 is thinking")
 			} else {
 				phil2.incoming <- 2
 				timesEaten := <-phil2.outgoing
@@ -70,7 +72,7 @@ func main() {
 
 		case msg4 := <-phil3.outgoing:
 			if msg4 == -1 {
-				fmt.Println("Philosopher 4 is thinking")
+				fmt.Println("4 - Philosopher 4 is thinking")
 			} else {
 				phil3.incoming <- 2
 				timesEaten := <-phil3.outgoing
@@ -79,7 +81,7 @@ func main() {
 
 		case msg5 := <-phil4.outgoing:
 			if msg5 == -1 {
-				fmt.Println("Philosopher 5 is thinking")
+				fmt.Println("5 - Philosopher 5 is thinking")
 			} else {
 				phil4.incoming <- 2
 				timesEaten := <-phil4.outgoing
