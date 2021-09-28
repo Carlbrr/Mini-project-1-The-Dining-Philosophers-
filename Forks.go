@@ -17,9 +17,11 @@ func (f Fork) forkReciever() {
 		//Dette virker ligegyldigt, da der kun kan være en værdi i denne channel.
 		//Måske man ikke bør tage en værdi, men bare bede den om at inkremere timesUsed.
 
-		if call == 1 {
+		if call == 0 {
 			f.timesUsed++
+		} else {
 			f.outgoing <- f.timesUsed
 		}
+
 	}
 }
