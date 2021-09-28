@@ -47,10 +47,12 @@ func (p *Philosopher) philReceiver() {
 
 		if call == 1 {
 			if p.isEating {
-				p.outgoing <- p.timesEaten
+				p.outgoing <- -2
 			} else {
 				p.outgoing <- -1
 			}
+		} else if call == 2 {
+			p.outgoing <- p.timesEaten
 		}
 	}
 }
